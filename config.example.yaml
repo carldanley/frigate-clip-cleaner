@@ -1,0 +1,6 @@
+snapshots:
+  retain:
+    default: 10
+    objects:
+      person: 15
+      car: 17
