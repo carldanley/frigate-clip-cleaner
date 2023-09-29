@@ -1,6 +1,6 @@
 snapshots:
   retain:
-    default: 10
+    default: 8
     objects:
       person: 15
       car: 17

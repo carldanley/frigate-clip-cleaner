@@ -3,7 +3,8 @@ package cleanup
 import "github.com/sirupsen/logrus"
 
 type Config struct {
-	FrigateConfigPath string
-	LogLevel          logrus.Level
-	DryRun            bool
+	FrigateConfigPath    string
+	FrigateClipDirectory string
+	LogLevel             logrus.Level
+	DryRun               bool
 }

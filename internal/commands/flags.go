@@ -23,5 +23,6 @@ func (r *Root) initializeCommonFlags() {
 
 func (r *Root) initializeCleanupFlags() {
 	r.Command.Flags().StringVarP(&r.Options.FrigateConfigPath, "frigate-config", "c", r.Options.FrigateConfigPath, "(env: FCC_CONFIG_FILE) frigate config file (default is /config/config.yml)")
-	r.Command.Flags().BoolVarP(&r.Options.DryRun, "dry-run", "d", false, "(env: FCC_DRY_RUN) perform a dry run without deletions")
+	r.Command.Flags().StringVarP(&r.Options.FrigateClipDirectory, "frigate-clip-dir", "x", r.Options.FrigateClipDirectory, "(env: FCC_CLIP_DIR) frigate clip directory (default is /media/frigate/clips)")
+	r.Command.Flags().BoolVarP(&r.Options.DryRun, "dry-run", "d", false, "perform a dry run without deletions")
 }

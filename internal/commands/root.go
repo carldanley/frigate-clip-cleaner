@@ -19,9 +19,10 @@ func New() *Root {
 	rc := &Root{
 		Log: logrus.New(),
 		Options: &cleanup.Config{
-			LogLevel:          logrus.DebugLevel,
-			DryRun:            (os.Getenv("FCC_DRY_RUN") == "true") || (os.Getenv("FCC_DRY_RUN") == "1"),
-			FrigateConfigPath: os.Getenv("FCC_CONFIG_FILE"),
+			LogLevel:             logrus.DebugLevel,
+			DryRun:               (os.Getenv("FCC_DRY_RUN") == "true") || (os.Getenv("FCC_DRY_RUN") == "1"),
+			FrigateConfigPath:    os.Getenv("FCC_CONFIG_FILE"),
+			FrigateClipDirectory: os.Getenv("FCC_CLIP_DIR"),
 		},
 	}
 
