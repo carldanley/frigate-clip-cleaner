@@ -1,0 +1,65 @@
+---
+project_name: frigate-clip-cleaner
+
+before:
+  hooks:
+  - go mod tidy
+
+builds:
+- id: frigate-clip-cleaner
+  env:
+  - CGO_ENABLED=0
+  goos:
+  - linux
+  - windows
+  - darwin
+  main: ./
+  binary: frigate-clip-cleaner
+  ldflags:
+  - -s -w -X github.com/carldanley/frigate-clip-cleaner/internal/commands.FccVersion={{.Version}} -extldflags '-static'
+
+archives:
+- name_template: >-
+    {{ .ProjectName }}_
+    {{- title .Os }}_
+    {{- if eq .Arch "amd64" }}x86_64
+    {{- else if eq .Arch "386" }}i386
+    {{- else }}{{ .Arch }}{{ end }}
+    {{- if .Arm }}v{{ .Arm }}{{ end }}
+  format_overrides:
+  - goos: windows
+    format: zip
+  files:
+  - README.md
+  - LICENSE
+
+checksum:
+  name_template: 'checksums.txt'
+
+snapshot:
+  name_template: '{{ .Version }}-snapshot-{{ .ShortCommit }}'
+
+changelog:
+  sort: asc
+  filters:
+    exclude:
+    - '^docs(\(.*\))?:'
+    - '^test(\(.*\))?:'
+    - '^ci(\(.*\))?:'
+    - '^chore(\(.*\))?:'
+    - '^build(\(.*\))?:'
+
+dockers:
+- image_templates:
+  - 'ghcr.io/carldanley/frigate-clip-cleaner:v{{ .Version }}'
+  - 'ghcr.io/carldanley/frigate-clip-cleaner:latest'
+  dockerfile: Dockerfile
+  build_flag_templates:
+  - "--label=org.opencontainers.image.created={{.Date}}"
+  - "--label=org.opencontainers.image.name={{.ProjectName}}"
+  - "--label=org.opencontainers.image.revision={{.FullCommit}}"
+  - "--label=org.opencontainers.image.version={{.Version}}"
+  - "--label=org.opencontainers.image.source={{.GitURL}}"
+  - "--label=org.opencontainers.image.licenses=MIT"
+  - "--label=VERSION={{.Version}}"
+  - "--platform=linux/amd64"
