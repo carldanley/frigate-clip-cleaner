@@ -72,7 +72,7 @@ func (r Root) NewCommand() *cobra.Command {
 	return rootCmd
 }
 
-func (r *Root) SetupLogging(cmd *cobra.Command, args []string) {
+func (r *Root) SetupLogging(_ *cobra.Command, _ []string) {
 	r.Log.SetLevel(r.Options.LogLevel)
 }
 
@@ -86,7 +86,7 @@ func (r *Root) AddCommands() {
 	// r.Command.AddCommand(r.NewCommandHere)
 }
 
-func (r *Root) Execute(cmd *cobra.Command, args []string) error {
+func (r *Root) Execute(cmd *cobra.Command, _ []string) error {
 	if err := cleanup.Execute(r.Options, r.Log); err != nil {
 		cmd.SilenceUsage = true
 

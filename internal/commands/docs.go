@@ -1,6 +1,6 @@
 package commands
 
-var FccVersion = "unstable"
+var FccVersion = "unstable" //nolint: gochecknoglobals
 
 const (
 	FccUse = `fcc -c File`

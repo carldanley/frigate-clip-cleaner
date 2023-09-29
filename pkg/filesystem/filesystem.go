@@ -2,6 +2,7 @@ package filesystem
 
 import (
 	"errors"
+	"fmt"
 	"io/fs"
 	"os"
 	"strings"
@@ -17,10 +18,10 @@ func PathExists(path string) bool {
 
 func ScanForFiles(path string, fileTypes []string) ([]fs.DirEntry, error) {
 	relevantFiles := []fs.DirEntry{}
-
 	files, err := os.ReadDir(path)
+
 	if err != nil {
-		return relevantFiles, err
+		return relevantFiles, fmt.Errorf("could not read directory: %w", err)
 	}
 
 	for _, file := range files {

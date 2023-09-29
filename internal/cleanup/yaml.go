@@ -1,6 +1,7 @@
 package cleanup
 
 import (
+	"fmt"
 	"os"
 
 	"gopkg.in/yaml.v2"
@@ -26,12 +27,12 @@ func ParseFrigateConfig(configFilePath string) (FrigateConfig, error) {
 
 	content, err := os.ReadFile(configFilePath)
 	if err != nil {
-		return cfg, err
+		return cfg, fmt.Errorf("could not read frigate config path: %w", err)
 	}
 
 	err = yaml.Unmarshal(content, &cfg)
 	if err != nil {
-		return cfg, err
+		return cfg, fmt.Errorf("could not unmarshal frigate config: %w", err)
 	}
 
 	return cfg, nil
