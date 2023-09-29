@@ -13,7 +13,7 @@ builds:
   - linux
   - windows
   - darwin
-  main: ./
+  main: ./cmd/frigate-clip-cleaner
   binary: frigate-clip-cleaner
   ldflags:
   - -s -w -X github.com/carldanley/frigate-clip-cleaner/internal/commands.FccVersion={{.Version}} -extldflags '-static'
