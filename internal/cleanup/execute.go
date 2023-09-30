@@ -58,6 +58,8 @@ func Execute(cfg *Config, log *logrus.Logger) error {
 	maxRetentionDay := time.Now().Add(-(time.Second * time.Duration(SecondsInDay*(maxDays+1))))
 	deletionQueue := []fs.DirEntry{}
 
+	log.Debugf("Maximum Retention Day: %v", maxRetentionDay)
+
 	for _, file := range relevantFiles {
 		fileInfo, err := file.Info()
 		if err != nil {
@@ -67,6 +69,8 @@ func Execute(cfg *Config, log *logrus.Logger) error {
 		if fileInfo.ModTime().After(maxRetentionDay) {
 			deletionQueue = append(deletionQueue, file)
 			mbToSave += (float64(fileInfo.Size()/ByteDivisor) / ByteDivisor)
+		} else {
+			log.Debugf("Skipping %s: mod time: %v", file.Name(), fileInfo.ModTime())
 		}
 	}
 
