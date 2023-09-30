@@ -66,11 +66,9 @@ func Execute(cfg *Config, log *logrus.Logger) error {
 			return fmt.Errorf("could not get file info: %w", err)
 		}
 
-		if fileInfo.ModTime().After(maxRetentionDay) {
+		if fileInfo.ModTime().Before(maxRetentionDay) {
 			deletionQueue = append(deletionQueue, file)
 			mbToSave += (float64(fileInfo.Size()/ByteDivisor) / ByteDivisor)
-		} else {
-			log.Debugf("Skipping %s: mod time: %v", file.Name(), fileInfo.ModTime())
 		}
 	}
 
